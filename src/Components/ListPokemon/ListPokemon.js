@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Card from '../Card/Card';
 
 
@@ -6,15 +6,15 @@ import Card from '../Card/Card';
 // el return devuelve la información de cada iteración del map
 
 function ListPokemon(props) {
-    console.log(props.data)
+    console.log(props)
     return (
         <div>
 
-            {props.data.map((item) => {
+            {props.data.map((item, index) => {
                 return (<>
-                <h2>{item.name}</h2>
-                
-                <Card name={item.name} url={item.sprites.front_default}/>
+                    <h2>{item.name}</h2>
+
+                    <Card name={item.name} url={item.sprites.front_default} key={index} />
                 </>
                 )
             })}

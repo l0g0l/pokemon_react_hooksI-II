@@ -7,9 +7,10 @@ import ListPokemon from './Components/ListPokemon/ListPokemon';
 
 import './App.css';
 
-export default function App(e) {
+export default function App() {
   const [nameInput, setNameInput] = useState('');
   const [pokemon, setPokemon] = useState([]);
+  const [find, setFind] = useState(true);
 
 
   // recogemos lo que el ususario inttroduce en el input y lo seteamos , para que guarde el valor en nameInput cada vez que cambie
@@ -20,40 +21,43 @@ export default function App(e) {
 
   }
 
-
   // Le pasamos el estado almacenado, nameInput a la url
-  const getPokemon = (e) => {
+  const getPokemon = () => {
 
     let url = `https://pokeapi.co/api/v2/pokemon/${nameInput}`
     axios.get(url)
       .then(response => {
         console.log(response.data)
-       
+        if(response.data) {
         setPokemon([...pokemon, response.data])
         console.log(pokemon) // no sale el valor que se acaba de setear en el estado
-       
-        //setea el input a vacío
+        setFind(true)
+        }else {
+          
+        }
+        //setea el input a vacío. A su vez le tengo que pasar un value al input con el nuevo estado
         setNameInput('')
       })
       .catch(error => {
-        console.log(error);
+        setFind(false)
       })
-    
+
 
   }
 
 
-// ponemos como value el valor del state nameInput
-// Renderizamos listPokemon y le pasamos por props lo necesario apra que pinte las cards
+  // ponemos como value el valor del state nameInput
+  // Renderizamos listPokemon y le pasamos por props lo necesario apra que pinte las cards
   return (
     <div className="App">
-      <input className="input" type="text" name="buscador" onChange={(e) => handleChange(e)} value={nameInput}/>
+      <input className="input" type="text" name="buscador" onChange={(e) => handleChange(e)} value={nameInput} />
       <button onClick={getPokemon}>Buscar</button>
       <div>
-        <ListPokemon data={pokemon}/>
+        {find?<ListPokemon data={pokemon} /> : <h3>Pokemon no encontrado</h3>}
       </div>
     </div>
   );
 }
+
 
 

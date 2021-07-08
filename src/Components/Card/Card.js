@@ -5,12 +5,12 @@ import './card.css';
 
 function Card(props) {
     console.log(props)
-   
+
 
     return (
         <div>
             <p>{props.name}</p>
-            <img src={props.url} alt={props.url}/> 
+            <img src={props.url} alt={props.url} />
         </div>
     )
 }
